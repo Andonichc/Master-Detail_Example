@@ -3,4 +3,7 @@
     <string name="title_activity_book_list">BookListActivity</string>
     <string name="title_activity_book_detail">BookDetailActivity</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="details_about">Details about item %1$s \n More details information here.</string>
+    <string name="item_num">Item %1$s</string>
 </resources>
