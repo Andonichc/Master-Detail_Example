@@ -43,7 +43,9 @@ public class BookListActivity extends AppCompatActivity {
         mContainer = (FrameLayout) findViewById(R.id.detail_container);
         //If it's not null it means we have the master-detail view so we can show the detail fragment
         if (mContainer != null) {
-            mFragment = BookDetailFragment.createInstance(Constants.bookItems.get(0));
+            if (mFragment == null) {
+                mFragment = BookDetailFragment.createInstance(Constants.bookItems.get(0));
+            }
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.detail_container, mFragment)
