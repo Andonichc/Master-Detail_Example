@@ -6,12 +6,13 @@ import android.support.v7.widget.Toolbar;
 
 import com.appnd.masterdetail.Constants;
 import com.appnd.masterdetail.R;
+import com.appnd.masterdetail.model.BookItem;
 
 public class BookDetailActivity extends AppCompatActivity {
 
-    public static final String DETAIL_ITEM = Constants.PACKAGE_NAME + ".detail_item";
+    public static final String POSITION = Constants.PACKAGE_NAME + ".position";
 
-    private String mItem;
+    private BookItem mItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,17 +23,25 @@ public class BookDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //check if we have the detail item from the intent
-        if (getIntent().hasExtra(DETAIL_ITEM)) {
-            mItem = getIntent().getStringExtra(DETAIL_ITEM);
+        if (getIntent().hasExtra(POSITION)) {
+            int position = getIntent().getIntExtra(POSITION, -1);
+            mItem = Constants.bookItems.get(position);
         } else {
+            // if for some reason we are starting the activity without a position we finish it to avoid crashes
             finish();
         }
+
+        //load the fragment
         BookDetailFragment mFragment = BookDetailFragment.createInstance(mItem);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.content_book_detail, mFragment)
                 .commit();
 
-        setTitle(getString(R.string.item_num, mItem));
+
+        setTitle(mItem.getTitle());
+
+        //Add the return button to the BookListActivity to the toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
