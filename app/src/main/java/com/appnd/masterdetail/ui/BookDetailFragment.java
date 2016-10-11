@@ -21,6 +21,8 @@ import java.text.SimpleDateFormat;
  * A simple {@link Fragment} subclass.
  */
 public class BookDetailFragment extends Fragment {
+
+    private final static String ITEM = Constants.PACKAGE_NAME + ".item";
     private BookItem mItem;
     private ImageView mCoverImage;
     private TextView mAuthor;
@@ -43,6 +45,10 @@ public class BookDetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //if we have a saved instance (meaning we are restoring the fragment state)
+        if (savedInstanceState != null && savedInstanceState.containsKey(ITEM))
+            mItem = savedInstanceState.getParcelable(ITEM);
+
         sdFormat = new SimpleDateFormat(Constants.DATE_FORMAT);
     }
 
@@ -62,7 +68,18 @@ public class BookDetailFragment extends Fragment {
     }
 
     /**
+     * Handles persistence on device's orientation changes
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(ITEM, mItem);
+    }
+
+    /**
      * Fills all the views with the content of a BoookItem instance
+     *
      * @param item item we want to fill the views with
      */
     public void setBookItem(BookItem item) {

@@ -1,8 +1,11 @@
 package com.appnd.masterdetail.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class BookItem {
+public class BookItem implements Parcelable {
     private int identifier;
     private String title;
     private String author;
@@ -66,4 +69,42 @@ public class BookItem {
     public void setUrlCover(String urlCover) {
         this.urlCover = urlCover;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.identifier);
+        dest.writeString(this.title);
+        dest.writeString(this.author);
+        dest.writeLong(this.publicationDate != null ? this.publicationDate.getTime() : -1);
+        dest.writeString(this.description);
+        dest.writeString(this.urlCover);
+    }
+
+    protected BookItem(Parcel in) {
+        this.identifier = in.readInt();
+        this.title = in.readString();
+        this.author = in.readString();
+        long tmpPublicationDate = in.readLong();
+        this.publicationDate = tmpPublicationDate == -1 ? null : new Date(tmpPublicationDate);
+        this.description = in.readString();
+        this.urlCover = in.readString();
+    }
+
+    public static final Parcelable.Creator<BookItem> CREATOR = new Parcelable.Creator<BookItem>() {
+        @Override
+        public BookItem createFromParcel(Parcel source) {
+            return new BookItem(source);
+        }
+
+        @Override
+        public BookItem[] newArray(int size) {
+            return new BookItem[size];
+        }
+    };
 }
