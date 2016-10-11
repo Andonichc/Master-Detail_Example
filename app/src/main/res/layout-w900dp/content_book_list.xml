@@ -9,10 +9,12 @@
     tools:context="com.appnd.masterdetail.ui.BookListActivity"
     android:layout_height="match_parent">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/book_list"
         android:layout_width="250dp"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_book_even"/>
 
     <FrameLayout
         android:id="@+id/detail_container"

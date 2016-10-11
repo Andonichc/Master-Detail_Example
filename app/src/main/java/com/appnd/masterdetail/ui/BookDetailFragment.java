@@ -2,23 +2,33 @@ package com.appnd.masterdetail.ui;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.appnd.masterdetail.Constants;
 import com.appnd.masterdetail.R;
+import com.appnd.masterdetail.model.BookItem;
+import com.bumptech.glide.Glide;
+
+import java.text.SimpleDateFormat;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BookDetailFragment extends Fragment {
+    private BookItem mItem;
+    private ImageView mCoverImage;
+    private TextView mAuthor;
+    private TextView mDate;
+    private TextView mDescription;
+    private SimpleDateFormat sdFormat;
 
-    private TextView mDetailText;
-    private String mItem;
-
-    public static BookDetailFragment createInstance(String item){
+    public static BookDetailFragment createInstance(BookItem item) {
         BookDetailFragment fragment = new BookDetailFragment();
         fragment.mItem = item;
         return fragment;
@@ -30,17 +40,40 @@ public class BookDetailFragment extends Fragment {
 
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        sdFormat = new SimpleDateFormat(Constants.DATE_FORMAT);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_book_detail, container, false);
-        mDetailText = (TextView) v.findViewById(R.id.detail_text);
-        setDetailText(mItem);
+        mCoverImage = (ImageView) v.findViewById(R.id.image_detail);
+        mAuthor = (TextView) v.findViewById(R.id.author_detail);
+        mDate = (TextView) v.findViewById(R.id.date_detail);
+        mDescription = (TextView) v.findViewById(R.id.description_detail);
+
+        //set the item
+        setBookItem(mItem);
         return v;
     }
 
-    public void setDetailText(String item) {
-        mDetailText.setText(getString(R.string.details_about, item));
+    /**
+     * Fills all the views with the content of a BoookItem instance
+     * @param item item we want to fill the views with
+     */
+    public void setBookItem(BookItem item) {
+        Glide.with(getActivity())
+                .load(item.getUrlCover())
+                .placeholder(R.drawable.placeholder)
+                .into(mCoverImage);
+
+        mAuthor.setText(item.getAuthor());
+        mDate.setText(sdFormat.format(item.getPublicationDate()));
+        mDescription.setText(item.getDescription());
     }
 
 }
