@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.appnd.masterdetail.ui.BookDetailFragment">
+
+    <ImageView
+        android:id="@+id/image_detail"
+        android:layout_width="150dp"
+        android:layout_height="220dp"
+        android:layout_margin="16dp"
+        android:scaleType="centerCrop"
+        android:textSize="18sp"
+        tools:src="@drawable/placeholder"
+        tools:text="Details about Item: 1 \n More details information here." />
+
+    <TextView
+        android:id="@+id/author_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        tools:text="Author1"
+        android:textSize="20sp"
+        android:layout_toEndOf="@id/image_detail"
+        android:layout_toRightOf="@id/image_detail" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/date_detail"
+        tools:text="31/07/2016"
+        android:layout_toRightOf="@id/image_detail"
+        android:layout_toEndOf="@id/image_detail"
+        android:layout_below="@id/author_detail"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_detail"
+        tools:text="Description 1"
+        android:layout_toRightOf="@id/image_detail"
+        android:layout_toEndOf="@id/image_detail"
+        android:layout_below="@id/date_detail"
+        android:textSize="20sp"/>
+
+</RelativeLayout>
