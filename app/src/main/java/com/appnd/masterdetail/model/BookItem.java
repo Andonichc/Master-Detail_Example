@@ -71,6 +71,10 @@ public class BookItem implements Parcelable {
     }
 
 
+    /**
+     * All the functions below are automated generated code to make the class parceable, meaning we can
+     * save the object in to a bundle to persist data.
+     */
     @Override
     public int describeContents() {
         return 0;
